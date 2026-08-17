@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Invoice";
+}
+@model List<Invoice>
+
+<div class="text-center">
+    <h1 class="display-4" >Invoice</h1>
+    <a asp-controller="Home" asp-action="CreateEditProduct" class="btn btn-secondary"> Add Products </a>
+
+<br /><br />
+    <table class="table">   
+        <thead> 
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    ProductName
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @{
+                foreach(var expence in Model)
+                {
+                    <tr>
+                        <td>
+                            @expence.Id
+                        </td>
+                        <td>
+                            @expence.ProductName
+                        </td>
+                        <td>
+                            @expence.Price
+                        </td>
+                        <td>
+                            <a asp-action="CreateEditProduct" asp-route-id="@expence.Id">Edit</a>
+                            <a asp-action="DeleteProduct" asp-route-id="@expence.Id">Delete</a>
+                        </td>
+                    
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+
+    <br />
+    <h4>Subtotal $@ViewBag.Subtotal.ToString("N2")</h4>
+    <h4>Ontario Tax (14%) $@ViewBag.OntarioTax.ToString("N2")</h4>
+    <h4>Total Price $@ViewBag.Total.ToString("N2")</h4>
+
+    <br />
+    <a asp-controller="Home" asp-action="InvoiceReport" class="btn btn-primary"> Generate Invoice</a>
+</div>

@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "Invoice Report";
+
+    var subtotal = Model.Sum(x => x.Price);
+    var tax = subtotal * 0.14m;
+    var total = subtotal + tax;
+}
+
+@model List<BillingApp.Models.Invoice>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <title>Invoice Report</title>
+
+
+    <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 15px 40px 40px 40px;
+                color: #333;
+            }
+
+            .invoice-container {
+                max-width: 900px;
+                margin: 0 auto;
+            }
+
+            .invoice-header {
+                text-align: center;
+                margin-top:0;
+                margin-bottom: 30px;
+            }
+
+            .invoice-header h1 {
+                    font-size: 40px;
+                    font-weight: 600;
+                    margin-top: 0;
+                    margin-bottom: 5px;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            th, td {
+                border: 1px solid #ddd;
+                padding: 12px;
+            }
+
+            th {
+                background-color: #f2f2f2;
+                text-align: left;
+            }
+
+            .price {
+                text-align: right;
+            }
+
+            .summary {
+                width: 300px;
+                margin-left: auto;
+                margin-top: 25px;
+            }
+
+            .summary div {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px;
+            }
+
+            .total {
+                font-size: 20px;
+                font-weight: bold;
+                border-top: 2px solid #333;
+            }
+
+            .buttons {
+                text-align: center;
+                margin-top: 30px;
+            }
+
+            .print-button {
+                padding: 10px 20px;
+                background-color: #0d6efd;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            @@media print {
+                .buttons {
+                    display: none;
+                }
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="invoice-container">
+
+        <div class="invoice-header">
+            <h1>INVOICE</h1>
+            <p>BillingApp</p>
+            <p>Date: @DateTime.Now.ToString("yyyy-MM-dd")</p>
+        </div>
+
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Product Name</th>
+                    <th class="price">Price</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var invoice in Model)
+                {
+                    <tr>
+                        <td>@invoice.Id</td>
+
+                        <td>@invoice.ProductName</td>
+
+                        <td class="price">
+                            $@invoice.Price.ToString("N2")
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+
+        <div class="summary">
+
+            <div>
+                <span>Subtotal:</span>
+                <span>$@subtotal.ToString("N2")</span>
+            </div>
+
+            <div>
+                <span>Ontario Tax (14%):</span>
+                <span>$@tax.ToString("N2")</span>
+            </div>
+
+            <div class="total">
+                <span>Total:</span>
+                <span>$@total.ToString("N2")</span>
+            </div>
+
+        </div>
+
+
+        <div class="buttons">
+
+            <button class="print-button" onclick="window.print()">
+                Print / Save as PDF
+            </button>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

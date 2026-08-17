@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Add / Edit";
+}
+
+@model BillingApp.Models.Invoice
+
+<div class="text-center">
+    <h1 class="display-4">Add Or Edit Product</h1>
+</div>
+
+<form asp-action="CreateEditProductForm" asp-controller="Home">
+
+    <label hidden>Id</label>
+    <input hidden class="form-control" type="number" placeholder="0" asp-for="Id" />
+
+    <label class="mt-4">Product Name</label>
+    <input class="form-control" type="text" placeholder=" Add a Product" asp-for="ProductName"  step="0.01"/>
+
+    <label class="mt-4">Price $</label>
+    <input class="form-control" type="number" placeholder="0.00" asp-for="Price" step="0.01"/>
+
+    <button class="btn btn-primary mt-4" type="submit">OK</button>
+
+</form>
