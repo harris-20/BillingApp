@@ -13,11 +13,15 @@ namespace BillingApp.Models
         
         }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Invoice>()
                 .Property(i => i.Price)
                 .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Invoice>()
+                .ToTable("Invoice", tb => tb.HasTrigger("trg_Invoice_Insert"));
         }
 
     }
